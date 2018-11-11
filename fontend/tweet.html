@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+</head>
+<body>
+<form id="formoid" action="" title="" method="post">
+    <div>
+        <label class="title">Tweet</label>
+        <input type="text" id="body" name="body" required>
+    </div>
+    <div>
+        <input type="hidden" id="user_id" name="user_id" value="1" >
+    </div>
+    <div>
+        <input type="submit" id="submitButton"  name="submitButton" value="Submit">
+    </div>
+</form>
+<script type='text/javascript'>
+    /* attach a submit handler to the form */
+    $("#formoid").submit(function(event) {
+
+        /* stop form from submitting normally */
+        event.preventDefault();
+        new_tweet();
+        /* get the action attribute from the <form action=""> element */
+//        var url = "http://localhost/twita/app/create_tweet.php";
+//
+//        /* Send the data using post with element body and user_id*/
+//        var posting = $.post( url, { user_id: $('#user_id').val(), body: $('#body').val() } );
+//
+//        /* Alerts the results */
+//        posting.done(function( data ) {
+//            alert('success');
+//        });
+    });
+
+
+
+    function new_tweet() {
+        "use strict";
+        var user_id, body;
+
+        user_id  =  jQuery('#user_id').val();
+        body = jQuery('#body').val();
+        var url = "http://localhost/twita/app/create_tweet.php";
+        jQuery.ajax({
+            type: 'POST',
+            url: url,
+            dataType:'json',
+            data: {
+                'user_id' : user_id,
+                'body' : body,
+            },
+
+            success: function (data) {
+                var status, message;
+                status = data.status;
+                message = data.message;
+                alert(status);
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            alert("error");
+            }
+        });
+
+    }
+
+
+
+</script>
+
+</body>
+</html>
